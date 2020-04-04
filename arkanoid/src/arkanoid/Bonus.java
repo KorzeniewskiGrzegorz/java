@@ -7,10 +7,7 @@ import java.util.Random;
 
 
 
-public class Bonus {
-
-	
-	private Rectangle bonusBox;
+public class Bonus extends Rectangle{
 
 	private boolean spadajacy=false;
 	private boolean aktywny=false;
@@ -19,35 +16,26 @@ public class Bonus {
 	public final long TIMER_LIMIT=150;
 	private int predkosc=5;
 		
-	private Cegla cegla;
 	private Paletka paletka;
 	private Plansza plansza;
 	private Pilka pilka;
 	
+	
 	public Bonus(Cegla ceg, Paletka pal,Plansza pla,Pilka pil){
-		cegla=ceg;
+		super(ceg.getCeglaBox().x + (ceg.getCeglaBox().width/2)-(20/2),
+				ceg.getCeglaBox().y+ (ceg.getCeglaBox().height/2)-(20/2),
+				20,20);
 		paletka=pal;
 		plansza=pla;
 		pilka=pil;
-		int bok=20;
-		
-		bonusBox= new Rectangle (cegla.getCeglaBox().x + (cegla.getCeglaBox().width/2)-(bok/2),
-				cegla.getCeglaBox().y+ (cegla.getCeglaBox().height/2)-(bok/2),
-				bok,bok);
-		
 		Random r = new Random();
-		
 		spadajacy=true;
-		
 		//losowanie typu
 		typ=r.nextInt(4)+1; 
-		
-		
-		
 	}
 	
-	public Rectangle getBonusBox(){
-		return bonusBox;
+	public Bonus getBonusBox(){
+		return this;
 	}
 	public void zwiekszTimer(){
 		timer++;
@@ -62,23 +50,20 @@ public class Bonus {
 		return aktywny;
 	}
 	
-	
 	public void zabierz(){
-		
 		spadajacy=false;
 	}
 	
 	public void spadek(){
-		if(spadajacy)
-		bonusBox.y+=predkosc;
+		if(spadajacy) {
+			y+=predkosc;
+		}
 	}
 	public void zderzenie(){
-		if(bonusBox.intersects(paletka.getPaletkaBox()) && spadajacy  )
-		{
+		if(this.intersects(paletka.getPaletkaBox()) && spadajacy){
 			wykonajBonus();
 			aktywny=true;
 			spadajacy=false;
-			
 		}		
 	}
 	
@@ -203,10 +188,10 @@ public class Bonus {
 				int szerPasa=6;
 				
 				g.setColor(new Color(51, 204, 51));
-				g.fillRect(bonusBox.x,bonusBox.y,bonusBox.width,bonusBox.height);
+				g.fillRect(x,y,width,height);
 				g.setColor(new Color(255, 255, 255));
-				g.fillRect(bonusBox.x,bonusBox.y+(bonusBox.width/2)-(szerPasa/2),bonusBox.width,szerPasa);//poziomy pas
-				g.fillRect(bonusBox.x+(bonusBox.width/2)-(szerPasa/2),bonusBox.y,szerPasa,bonusBox.width);//pionowy pas
+				g.fillRect(x,y+(width/2)-(szerPasa/2),width,szerPasa);//poziomy pas
+				g.fillRect(x+(width/2)-(szerPasa/2),y,szerPasa,width);//pionowy pas
 				
 			}
 			else//utrudniacze
@@ -214,9 +199,9 @@ public class Bonus {
 				int szerPasa=6;
 				
 				g.setColor(new Color(255, 0, 0));
-				g.fillRect(bonusBox.x,bonusBox.y,bonusBox.width,bonusBox.height);
+				g.fillRect(x,y,width,height);
 				g.setColor(new Color(255, 255, 255));
-				g.fillRect(bonusBox.x,bonusBox.y+(bonusBox.width/2)-(szerPasa/2),bonusBox.width,szerPasa);//poziomy pas
+				g.fillRect(x,y+(width/2)-(szerPasa/2),width,szerPasa);//poziomy pas
 				
 			}
 		}

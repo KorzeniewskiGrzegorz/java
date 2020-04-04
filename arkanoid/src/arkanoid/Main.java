@@ -24,19 +24,11 @@ public class Main extends JFrame {
 	 this.setVisible(true);
 	} 
 	
-	
-	
-	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
 		okno = new Main();
 		plansza= new Plansza(okno);
 		okno.add(plansza);
 		okno.pack();
-		
 	}
-
-	
-	
 }

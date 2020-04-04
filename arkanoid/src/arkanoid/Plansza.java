@@ -107,8 +107,6 @@ public class Plansza extends JPanel {
                     cegla[x][y]=new Cegla(pilka,x*cSzer,y*cWys,cSzer,cWys);
                 }
             }
-       
-               
                
             planszaThread.start();
         }

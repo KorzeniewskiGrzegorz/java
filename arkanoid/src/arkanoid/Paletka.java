@@ -7,64 +7,51 @@ import java.awt.Rectangle;
 
 import javax.swing.JPanel;
 
+public class Paletka extends Rectangle {
 
-public class Paletka  {
-
-	private Rectangle paletkaBox;
-	private int szerokosc;
-	public final int SZER_WASKO=60;
-	public final int SZER_NORMALNIE=100;
-	public final int SZER_SZEROKO=160;
 	private static final int wysokosc =20;
 	private Plansza plansza;
+	public static final int SZER_WASKO=60;
+	public static final int SZER_NORMALNIE=100;
+	public static final int SZER_SZEROKO=160;
 
 	public Paletka(Plansza pla,int szerokosc_planszy,int polozenie_y_na_planszy){
+		super((szerokosc_planszy/2)-(SZER_NORMALNIE/2),polozenie_y_na_planszy,SZER_NORMALNIE,wysokosc);
 		plansza=pla;
-		szerokosc=SZER_NORMALNIE;
-		
-        paletkaBox=new Rectangle((szerokosc_planszy/2)-(szerokosc/2),polozenie_y_na_planszy,szerokosc,wysokosc);
-        
-        
 	}
 	
-	
-	
-	public void lewo()
-	{
-		paletkaBox.x-=10;
-		if(paletkaBox.x<0) paletkaBox.x=0;
-		
+	public void lewo() {
+		x-=10;
+		if(x<0) {
+			x=0;
+		}
 	}
 	
-	public void prawo()
-	{
-		paletkaBox.x+=10;
-		if(paletkaBox.x>plansza.getRozmiarPlanszy().width-paletkaBox.width) 
-			paletkaBox.x=plansza.getRozmiarPlanszy().width-paletkaBox.width;
+	public void prawo()	{
+		x+=10;
+		if(x>plansza.getRozmiarPlanszy().width-width) {
+			x=plansza.getRozmiarPlanszy().width-width;
+		}
 	}
 	
-	public Rectangle getPaletkaBox()
-	{
-		return paletkaBox;
+	public Paletka getPaletkaBox()	{
+		return this;
 	}
 
-	
 	public void setPaletkaBox(int x,int y,int szerokosc,int wysokosc){
-		paletkaBox.x=x;
-		paletkaBox.y=y;
-		paletkaBox.width=szerokosc;
-		paletkaBox.height=wysokosc;
-		
+		this.x=x;
+		this.y=y;
+		width=szerokosc;
+		height=wysokosc;
 	}
 	
 	public void rysuj(Graphics g){
 		g.setColor(new Color(201,201,201));
-		g.fillRect(paletkaBox.x,paletkaBox.y, paletkaBox.width, paletkaBox.height);
+		g.fillRect(x,y, width, height);
 		g.setColor(new Color(0,0,0));
-		g.drawRect(paletkaBox.x,paletkaBox.y, paletkaBox.width, paletkaBox.height);
+		g.drawRect(x,y, width, height);
 		g.setColor(new Color(255,0,0));
-		g.fillRect(paletkaBox.x,paletkaBox.y, paletkaBox.width/10, paletkaBox.height);
-		g.fillRect(paletkaBox.x+paletkaBox.width*9/10,paletkaBox.y, paletkaBox.width/10, paletkaBox.height);
-		
+		g.fillRect(x,y, width/10, height);
+		g.fillRect(x+width*9/10,y, width/10, height);
 	}
 }
