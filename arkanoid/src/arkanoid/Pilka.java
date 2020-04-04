@@ -1,11 +1,7 @@
 package arkanoid;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Rectangle;
-
-import javax.swing.JPanel;
 
 public class Pilka {
 
@@ -47,7 +43,7 @@ public class Pilka {
 		//this.zderzenie_paletka();
 		
 		if(x+1<=0 ) kier_x=true;
-		if(x+srednica+1>=plansza.getRozmiarPlanszy().width) kier_x=false;
+		if(x+srednica+1>=plansza.getSizeBoard().width) kier_x=false;
 		if(y+1<=0)kier_y=true;
 		
 		if(!kier_pion)
@@ -115,7 +111,7 @@ public class Pilka {
 			}
 		}
 				
-		if(y>=plansza.getRozmiarPlanszy().height-srednica)stan=false;
+		if(y>=plansza.getSizeBoard().height-srednica)stan=false;
 		
 		
 	}

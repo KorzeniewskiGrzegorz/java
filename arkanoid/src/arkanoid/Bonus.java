@@ -118,12 +118,12 @@ public class Bonus extends Rectangle{
 		
 		
 		paletka.setPaletkaBox(paletka.getPaletkaBox().x,paletka.getPaletkaBox().y,								
-				paletka.SZER_SZEROKO, paletka.getPaletkaBox().height);
+				Paletka.SZER_SZEROKO, paletka.getPaletkaBox().height);
 		
-		if(paletka.getPaletkaBox().x+paletka.getPaletkaBox().width>plansza.getRozmiarPlanszy().width)
+		if(paletka.getPaletkaBox().x+paletka.getPaletkaBox().width>plansza.getSizeBoard().width)
 		
-			paletka.setPaletkaBox(plansza.getRozmiarPlanszy().width-paletka.SZER_SZEROKO,paletka.getPaletkaBox().y,					
-				paletka.SZER_SZEROKO, paletka.getPaletkaBox().height);
+			paletka.setPaletkaBox(plansza.getSizeBoard().width-Paletka.SZER_SZEROKO,paletka.getPaletkaBox().y,					
+					Paletka.SZER_SZEROKO, paletka.getPaletkaBox().height);
 		
 	}
 	
@@ -133,7 +133,7 @@ public class Bonus extends Rectangle{
 		
 		paletka.setPaletkaBox(paletka.getPaletkaBox().x,
 								paletka.getPaletkaBox().y,
-								paletka.SZER_WASKO, paletka.getPaletkaBox().height);
+								Paletka.SZER_WASKO, paletka.getPaletkaBox().height);
 		
 	}
 	
@@ -141,12 +141,12 @@ public class Bonus extends Rectangle{
 		
 		paletka.setPaletkaBox(paletka.getPaletkaBox().x,
 				paletka.getPaletkaBox().y,
-				paletka.SZER_NORMALNIE, paletka.getPaletkaBox().height);
+				Paletka.SZER_NORMALNIE, paletka.getPaletkaBox().height);
 		
-		if(paletka.getPaletkaBox().x+paletka.getPaletkaBox().width>plansza.getRozmiarPlanszy().width)
+		if(paletka.getPaletkaBox().x+paletka.getPaletkaBox().width>plansza.getSizeBoard().width)
 			
-			paletka.setPaletkaBox(plansza.getRozmiarPlanszy().width-paletka.SZER_NORMALNIE,paletka.getPaletkaBox().y,					
-				paletka.SZER_NORMALNIE, paletka.getPaletkaBox().height);
+			paletka.setPaletkaBox(plansza.getSizeBoard().width-Paletka.SZER_NORMALNIE,paletka.getPaletkaBox().y,					
+					Paletka.SZER_NORMALNIE, paletka.getPaletkaBox().height);
 		
 	}
 	

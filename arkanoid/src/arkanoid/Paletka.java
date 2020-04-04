@@ -1,11 +1,8 @@
 package arkanoid;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-
-import javax.swing.JPanel;
 
 public class Paletka extends Rectangle {
 
@@ -29,8 +26,8 @@ public class Paletka extends Rectangle {
 	
 	public void prawo()	{
 		x+=10;
-		if(x>plansza.getRozmiarPlanszy().width-width) {
-			x=plansza.getRozmiarPlanszy().width-width;
+		if(x>plansza.getSizeBoard().width-width) {
+			x=plansza.getSizeBoard().width-width;
 		}
 	}
 	

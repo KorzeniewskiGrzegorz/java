@@ -4,9 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.sql.Time;
-
-import javax.swing.JTextArea;
 
 public class Gracz {
 
@@ -23,9 +20,9 @@ public class Gracz {
 	
 	public Gracz(Plansza pla){
 		plansza=pla;
-		rozmiarGracza=new Dimension (plansza.getRozmiarOkna().
-				width,plansza.getRozmiarOkna().height-plansza.getRozmiarPlanszy().height);
-		poczUkl=plansza.getRozmiarPlanszy().height;
+		rozmiarGracza=new Dimension (plansza.getSizeWindow().
+				width,plansza.getSizeWindow().height-plansza.getSizeBoard().height);
+		poczUkl=plansza.getSizeBoard().height;
 		
 	}
 	
