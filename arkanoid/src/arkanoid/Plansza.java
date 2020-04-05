@@ -29,7 +29,7 @@ public class Plansza extends GameBoard {
     	super(new Dimension(okno.getSize()));
                    
     	plansza=this;
-        gracz=new Gracz(this);
+        gracz=new Gracz();
         okno.addKeyListener(new KeyAdapter() {
 	        public void keyPressed(KeyEvent e){
 	            if(gracz.getGameStatus()==Status.RESTARTED) { // game is restarted (lost a ball, going to launch new one
@@ -150,7 +150,7 @@ public class Plansza extends GameBoard {
     public void paint(Graphics g){
     	super.paint(g);
     	
-        gracz.rysuj(g);
+        gracz.rysuj(g,plansza.getAnchorPlayerArea());
         paletka.rysuj(g);
         pilka.rysuj(g);
        

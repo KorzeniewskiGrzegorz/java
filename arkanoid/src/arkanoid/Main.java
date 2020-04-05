@@ -10,7 +10,7 @@ public class Main extends JFrame {
 	public Main(){
 		
 	 this.setTitle("Arkanoid");
-	 this.setSize(503, 800);
+	 this.setSize(496, 800);
 	 this.setPreferredSize(getSize());
 	 this.setResizable(false);
 	 this.setLocationRelativeTo(null);
