@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.util.Random;
 
 import game_base_classess.GameBoard;
+import game_base_classess.GamePlayer.Status;
  
 public class Plansza extends GameBoard {
        
@@ -28,9 +29,10 @@ public class Plansza extends GameBoard {
     	super(new Dimension(okno.getSize()));
                    
     	plansza=this;
+        gracz=new Gracz(this);
         okno.addKeyListener(new KeyAdapter() {
 	        public void keyPressed(KeyEvent e){
-	            if(getGameStatus()==Status.RESTARTED) { // game is restarted (lost a ball, going to launch new one
+	            if(gracz.getGameStatus()==Status.RESTARTED) { // game is restarted (lost a ball, going to launch new one
 	                if(e.getKeyCode()==KeyEvent.VK_LEFT) {
 	                    paletka.lewo();
 	                    pilka.pilkaStart();
@@ -42,10 +44,10 @@ public class Plansza extends GameBoard {
 	                }
 	               
 	                if(e.getKeyCode()==KeyEvent.VK_SPACE) {
-	                    start();
+	                	gracz.start();
 	                }
 	                repaint();
-	            }else if(getGameStatus()==Status.ONGOING){
+	            }else if(gracz.getGameStatus()==Status.ONGOING){
                     if(e.getKeyCode()==KeyEvent.VK_LEFT){
                         paletka.lewo();
                     }
@@ -54,12 +56,16 @@ public class Plansza extends GameBoard {
                     }
                    
                     if(e.getKeyCode()==KeyEvent.VK_SPACE){
-                        pause();
+                    	gracz.pause();
+                    }
+                }else if(gracz.getGameStatus()==Status.PAUSED){
+                    if(e.getKeyCode()==KeyEvent.VK_SPACE){
+                    	gracz.start();
                     }
                 }
 	        }
         });
-        gracz=new Gracz(this);
+
         paletka=new Paletka(this, getSizeBoard().width,getSizeBoard().height-50);
         pilka =new Pilka(this,paletka);
         cegla=new Cegla[ceglyNaX][ceglyNaY];
@@ -78,15 +84,15 @@ public class Plansza extends GameBoard {
     
     private Thread planszaThread= new Thread(new Runnable(){
         public void run(){
-            while(getGameStatus()!= Status.WIN && getGameStatus()!= Status.LOSE) {                	
-            	if(getGameStatus()==Status.ONGOING) {      
+            while(gracz.getGameStatus()!= Status.WIN && gracz.getGameStatus()!= Status.LOSE) {                	
+            	if(gracz.getGameStatus()==Status.ONGOING) {      
             		pilka.ruch();
                     pilka.zderzenie_paletka();
                     if(!pilka.getStan()) {	
                     	strataPilki();
                     }
-                    if(gracz.getIloscPilek()==0) { 
-                    	lose(); 
+                    if(gracz.getLifeCount()==0) { 
+                    	gracz.lose(); 
                     }
                     
                     boolean noCegla = true;
@@ -120,14 +126,12 @@ public class Plansza extends GameBoard {
 	                        }
                         }
                    }
-                   gracz.zwiekszCzasGry();
                    
                    if(noCegla) { // if there's no cegla
-                	   win();
+                	   gracz.win();
                    }
-                }else if(getGameStatus()!= Status.RESTARTED) {
-                	
                 }
+            	
             	repaint();
                 try {
                        Thread.sleep(20);
@@ -137,18 +141,15 @@ public class Plansza extends GameBoard {
     });    
        
     public void strataPilki(){
-        restart();
-        gracz.zmniejszIloscPilek();
+        gracz.restart();
+        gracz.decreaseLifeCount();
         pilka.setStan(true);
         pilka.pilkaStart();            
     }
        
     public void paint(Graphics g){
-        super.paint(g);
-        g.drawRect(0, 0, getSizeBoard().width, getSizeBoard().height);
-        g.setColor(new Color(51,0,255));
-        g.fillRect(0, 0, getSizeBoard().width, getSizeBoard().height);
-       
+    	super.paint(g);
+    	
         gracz.rysuj(g);
         paletka.rysuj(g);
         pilka.rysuj(g);
@@ -165,13 +166,13 @@ public class Plansza extends GameBoard {
         	}
         }
                        
-        if(getGameStatus()==Status.LOSE) {
+        if(gracz.getGameStatus()==Status.LOSE) {
             g.setFont(new Font("Arial",Font.BOLD,50));
 			g.setColor(new Color(255,0,0));
 			g.drawString("GAME OVER", (getSizeBoard().width/2)-158, getSizeBoard().height/2);
 		}
         
-		if(getGameStatus()==Status.WIN) {
+		if(gracz.getGameStatus()==Status.WIN) {
 			String victory="VICTORY!";
 			g.setFont(new Font("Arial",Font.BOLD,50));
 			g.setColor(new Color(255,0,0));

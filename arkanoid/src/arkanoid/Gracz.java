@@ -5,73 +5,42 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 
-public class Gracz {
+import game_base_classess.GamePlayer;
 
-	private Plansza plansza;
-	private Dimension rozmiarGracza;
-	private String nazwa="Grzegorz";
+public class Gracz extends GamePlayer {
+
 	private String sZycia="Ilosc pilek ";
-	private int poczUkl;
-	private int iloscPilek=3;
-	private long czasGryImpulsy;
-	private long czasGrySekundy=0;
-	private long czasGryMinuty=0;
-	
-	
+
 	public Gracz(Plansza pla){
-		plansza=pla;
-		rozmiarGracza=new Dimension (plansza.getSizeWindow().
-				width,plansza.getSizeWindow().height-plansza.getSizeBoard().height);
-		poczUkl=plansza.getSizeBoard().height;
-		
-	}
-	
-	public void zmniejszIloscPilek()
-	{
-		iloscPilek--;
-	}
-	
-	public int getIloscPilek(){
-		return iloscPilek;
-	}
-	
-	public void zwiekszCzasGry()
-	{
-		czasGryImpulsy++;
-		czasGrySekundy=czasGryImpulsy/17;
-		if(czasGrySekundy>=60)
-		{
-			czasGryMinuty++;
-			czasGryImpulsy=0;
-		}
+		super(new Dimension (pla.getSizeWindow().width,pla.getSizeWindow().height-pla.getSizeBoard().height),
+				pla.getSizeBoard().height,
+				"Grzegorz",
+				3);
 	}
 	
 	public void rysuj(Graphics g){
+		super.paint(g);
+		g.drawString(sZycia,30,getCoordPlayerArea()+65);
 		
-		g.setFont(new Font("Arial",Font.BOLD,25));
-		g.setColor(new Color(0, 0, 153));
-		
-		g.fillRect(0, poczUkl,rozmiarGracza.width, 
-				rozmiarGracza.height);
-		
-		g.setColor(new Color(255,0,0));
-		g.drawString(nazwa,30,poczUkl+30);
-		
-		g.drawString(sZycia,30,poczUkl+65);
-		
-		for(int i=0;i<iloscPilek;i++ )
-		{
+		for(int i=0;i<getLifeCount();i++ ) {
 			g.setColor(new Color(240,240,240));
-			g.fillOval(30 + i*30, poczUkl+100, 30, 30);
+			g.fillOval(30 + i*30, getCoordPlayerArea()+100, 30, 30);
 			g.setColor(new Color(0,0,0));
-			g.drawOval(30 + i*30, poczUkl+100, 30, 30);
+			g.drawOval(30 + i*30, getCoordPlayerArea()+100, 30, 30);
 		}
 		
 		g.setColor(new Color(255,0,0));
-		g.drawString("czas gry:",300,poczUkl+65);
-		if(czasGrySekundy<10) g.drawString(String.valueOf(czasGryMinuty)+":0"+String.valueOf(czasGrySekundy),300,poczUkl+100);
-		else
-		     g.drawString(String.valueOf(czasGryMinuty)+":"+String.valueOf(czasGrySekundy),300,poczUkl+100);
+		g.drawString("czas gry:",300,getCoordPlayerArea()+65);
+			
+		long gameTimesec = getGameTime();
+		
+		String formattedTime = String.format("%02d:%02d",  (gameTimesec % 3600) / 60, (gameTimesec % 60));
+		g.drawString(String.valueOf(formattedTime),300,getCoordPlayerArea()+100);
+		
+		//g.drawString(String.valueOf(getGameTime()),300,getCoordPlayerArea()+100);
+		//if(czasGrySekundy<10) g.drawString(String.valueOf(czasGryMinuty)+":0"+String.valueOf(czasGrySekundy),300,poczUkl+100);
+		//else
+		//     g.drawString(String.valueOf(czasGryMinuty)+":"+String.valueOf(czasGrySekundy),300,poczUkl+100);
 		
 	}
 	
